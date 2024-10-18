@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Google Search</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: sans-serif;
+        }
+
+        body {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f9f9f9;
+        }
+
+        .container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .search {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        input {
+            width: 350px;
+            height: 40px;
+            border-radius: 20px;
+            border: 1px solid #dcdcdc;
+            padding: 0 40px;
+            font-weight: bold;
+            transition: width 0.3s;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 10px;
+            color: black;
+            cursor: pointer;
+        }
+
+        .cross-icon {
+            position: absolute;
+            right: 10px;
+            color: black;
+            cursor: pointer;
+            visibility: hidden;
+        }
+
+        input:focus + .cross-icon,
+        input:not(:placeholder-shown) + .cross-icon {
+            visibility: visible;
+        }
+
+        .image {
+            width: 550px;
+            margin-bottom: 20px;
+            mix-blend-mode: multiply;
+        }
+
+        @media (max-width: 768px) {
+            input {
+                width: 70vw;
+            }
+            .image {
+                width: 70vw;
+            }
+        }
+
+        @media (max-width: 480px) {
+            input {
+                height: 35px;
+            }
+            .image {
+                width: 90vw;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div>
+            <img class="image" src="https://play-lh.googleusercontent.com/1-hPxafOxdYpYZEOKzNIkSP43HXCNftVJVttoo4ucl7rsMASXW3Xr6GlXURCubE1tA=w3840-h2160-rw" alt="">
+        </div>
+        <div class="search">
+            <i class="fas fa-search search-icon" id="search"></i>
+            <input type="text" id="input" placeholder="Search...">
+            <i id="clean" class="fas fa-times cross-icon"></i>
+        </div>
+    </div>
+    <script>
+        const clean = document.getElementById('clean');
+        const input = document.getElementById('input');
+        const search = document.getElementById('search');
+
+        clean.addEventListener('click', () => {
+            input.value = '';
+            input.focus();
+            clean.style.visibility = 'hidden';
+        });
+
+        input.addEventListener('input', () => {
+            clean.style.visibility = input.value ? 'visible' : 'hidden';
+        });
+
+        search.addEventListener('click', () => {
+            const query = encodeURIComponent(input.value);
+            window.location.href = `https://www.google.com/search?q=${query}`;
+        });
+    </script>
+</body>
+</html>
